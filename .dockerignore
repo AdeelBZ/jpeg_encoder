@@ -1,6 +1,6 @@
 #this is essentially the same as the gitignore just for docker. 
-/build
-/obj/*
+
+obj/jpegCodec/*.o
 
 *.swp
 jpeg_encoder
