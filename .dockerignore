@@ -1,0 +1,12 @@
+#this is essentially the same as the gitignore just for docker. 
+/build
+/obj/*
+
+*.swp
+jpeg_encoder
+*.md
+
+*.jpg
+
+!./lion.jpg
+!./bearImg.jpg

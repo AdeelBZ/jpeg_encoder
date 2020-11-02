@@ -1,0 +1,75 @@
+# https://medium.com/@mfcollins3/shipping-c-programs-in-docker-1d79568f6f52
+
+
+#FROM - specifies the base image that we want to use
+
+#image 1 we are creating. Contains all of the source code and such
+FROM ubuntu:bionic as build
+
+
+LABEL Adeel Zammit <adeelbzdev@gmail.com>
+
+# sets environment variables 
+ENV TIME_ZONE=Australia/Sydney
+ENV ENV_NAME dev
+ENV EGG_SERVER_ENV dev
+ENV NODE_ENV dev
+ENV NODE_CONFIG_ENV dev
+
+#Here, we set the timezone in docker
+RUN apt-get -yqq update
+RUN apt-get -yqq install tzdata \
+    && cp /usr/share/zoneinfo/Australia/Sydney /etc/localtime \
+    && echo "Australia/Sydney" > /etc/timezone 
+
+RUN apt-get update && \
+    apt-get install -y build-essential git cmake autoconf libtool pkg-config
+
+#note need to keep the repostiory as /src/visualiser-web-app for tsc command to work
+#sets the working directory
+WORKDIR /src/encoder 
+
+
+# add `/src/encoder` folder to $PATH
+ENV PATH /src/encoder:$PATH
+
+# install app dependencies; copy into the working directory 
+COPY . ./
+
+
+# Install all packages specified in the package.json file
+RUN echo $PWD
+RUN rm /src/encoder/build -f -R
+RUN ls 
+RUN mkdir /src/encoder/build
+
+#note you can't use workdir here
+WORKDIR /src/encoder/build 
+RUN echo $PWD
+RUN cmake .. && make
+RUN ls
+
+
+#image 2; only contains the program and the needed program files
+FROM ubuntu:bionic
+
+WORKDIR /opt/jpeg_encoder
+
+COPY --from=build /src/encoder/build/jpeg_encoder ./
+COPY --from=build /src/encoder/bearImg.jpg ./
+COPY --from=build /src/encoder/lion.jpg ./
+
+CMD ["./jpeg_encoder", "./bearImg.jpg", "./myOutput1.jpg"]
+
+EXPOSE 7001:7000
+
+
+#it's simiar to a vm, we've build our server configuraiton 
+
+#timedatectl set-timezone Australia/Sydney
+#Note - the yqq flag is used to suppriess output and assumes "Yes" to all prompts
+
+
+# docker image build --file ./Dockerfile.dev --tag jpeg_encoder:dev .
+
+#put a dockerignore file as well 

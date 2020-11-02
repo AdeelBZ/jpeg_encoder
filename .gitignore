@@ -1,0 +1,14 @@
+*.jpg
+mp3Encoder
+jpeg_encoder
+/build
+/obj/**
+
+*.out
+*.txt
+
+*.swp
+
+*.md
+
+!./readme.md

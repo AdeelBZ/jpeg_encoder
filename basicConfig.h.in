@@ -1,0 +1,7 @@
+// The configured options and settings for this project
+#define Config_VERSION_MAJOR @Config_VERSION_MAJOR @
+#define Config_VERSION_MINOR @Config_VERSION_MINOR @
+
+/* Note: When CMake configures this header file, the vlaue for @Tutorial_VERSIOn_MAJOR@ and the other
+will be replaced */
+

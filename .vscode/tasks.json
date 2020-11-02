@@ -1,0 +1,102 @@
+// https://stackoverflow.com/questions/52238171/how-to-run-multiple-tasks-in-vs-code-on-build
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "Main Build",
+            //"command": ,
+            "command": "/usr/bin/g++",
+            "args": [
+                "-g",
+                "${workspaceFolder}/src/*.cpp",
+                "${workspaceFolder}/obj/jpegCodec/*.o", //adding the object files that were complied for the class
+                "-o",
+                "${workspaceFolder}/jpeg_encoder",
+                "-I${workspaceFolder}",
+                "-I${workspaceFolder}/include",
+                "-lpthread",
+                "-std=c++17",
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "dependsOn": [
+                "jpeg_dct",
+                "jpeg_headers",
+                "jpeg_main"
+                // "BuildCodecHeaders", "BuildCodecDCT", "BuildCodecMain"
+            ]
+        },
+        {
+            "type": "shell",
+            "label": "jpeg_dct",
+            "command": "/usr/bin/g++",
+            "args": [
+                "-c",
+                "${workspaceFolder}/src/jpegCodec/jpeg_dct.cpp",
+                "-o",
+                "${workspaceFolder}/obj/jpegCodec/jpeg_dct.o",
+                "-I${workspaceFolder}",
+                "-I${workspaceFolder}/include",
+                "-lpthread",
+                "-std=c++17",
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "type": "shell",
+            "label": "jpeg_headers",
+            "command": "/usr/bin/g++",
+            "args": [
+                "-c",
+                "${workspaceFolder}/src/jpegCodec/jpeg_headers.cpp",
+                "-o",
+                "${workspaceFolder}/obj/jpegCodec/jpeg_headers.o",
+                "-I${workspaceFolder}",
+                "-I${workspaceFolder}/include",
+                "-lpthread",
+                "-std=c++17",
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "type": "shell",
+            "label": "jpeg_main",
+            "command": "/usr/bin/g++",
+            "args": [
+                "-c",
+                "${workspaceFolder}/src/jpegCodec/jpeg_main.cpp",
+                "-o",
+                "${workspaceFolder}/obj/jpegCodec/jpeg_main.o",
+                "-I${workspaceFolder}",
+                "-I${workspaceFolder}/include",
+                "-lpthread",
+                "-std=c++17",
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        }
+    ]
+}
