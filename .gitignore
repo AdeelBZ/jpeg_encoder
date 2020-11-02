@@ -1,8 +1,8 @@
 *.jpg
 mp3Encoder
 jpeg_encoder
-/build
-/obj/**
+build/*
+obj/*
 
 *.out
 *.txt
@@ -11,4 +11,6 @@ jpeg_encoder
 
 *.md
 
-!./readme.md
+!readme.md
+
+!CMakeLists.txt
