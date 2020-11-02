@@ -1,8 +1,8 @@
 *.jpg
 mp3Encoder
 jpeg_encoder
-build/*
-obj/*
+
+obj/jpegCodec/*.o
 
 *.out
 *.txt
